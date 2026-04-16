@@ -5,8 +5,10 @@ services:
     build:
       context: ./TodoApi
       dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
+    #ports: // hiding sevrer port now add nginx
+    # - "8080:8080"
+    expose:
+      - 8080
     depends_on:
       - db
     restart: always

@@ -28,6 +28,12 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 
 app.UseHttpsRedirection();
 
+app.MapGet("/" , async(HttpContext context) =>
+{
+    var ip = context.Connection.RemoteIpAddress?.ToString();
+    var port = context.Connection.RemotePort;
+    Results.Ok($"Hello ${ip} -> Port : ${port}");
+});
 
 
 app.MapGet("/todos", async (AppDbContext context) =>

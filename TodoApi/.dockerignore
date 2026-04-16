@@ -1,0 +1,10 @@
+bin/
+obj/
+.git/
+.vscode/
+.idea/
+
+Dockerfile
+docker-compose.yml
+
+*.log

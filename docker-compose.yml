@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: ./TodoApi
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    restart: always
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: Host=db;Port=5432;Database=tododb;Username=postgres;Password=postgres
+
+    networks:
+      - app-network  
+
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: tododb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+   # ports:
+   #   - "5432:5432" // expose port so use network bridge
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-network  
+
+volumes:
+  pgdata:
+
+# use network to make communication
+networks:
+  app-network:
+    driver: bridge  

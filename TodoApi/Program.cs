@@ -3,6 +3,8 @@ using TodoApi.Data;
 using TodoApi.Dtos;
 using TodoApi.Model;
 
+using Microsoft.AspNetCore.HttpOverrides;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -27,6 +29,13 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 }
 
 app.UseHttpsRedirection();
+
+// use to see client ip came to nginx and nginx forward those to this
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+
 
 app.MapGet("/" , async(HttpContext context) =>
 {

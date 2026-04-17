@@ -44,9 +44,7 @@ app.MapGet("/", (HttpContext context) =>
 
     return Results.Json(new
     {
-        Ip = ip,
-        Port = port,
-        Message = $"Hello {ip} -> Port : {port}"
+       message = "This is test github CI/CD actions"
     });
 });
 

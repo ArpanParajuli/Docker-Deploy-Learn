@@ -1,4 +1,4 @@
-name: First Pipeline
+name: Asp Net Core Deploy Pipeline Basic
 
 
 on:
@@ -7,9 +7,22 @@ on:
             - main
 
 jobs:
-    hello:
-        runs-on: ubuntu-latest 
+    build:
+        runs-on: ubuntu-latest # Uses ubuntu os for environment
         
         steps:
-            - name:  Print Hello world
-              run : echo "Hello world from Github Actions!! Made my me!!!"
+            # Check code : Copy my repo for execution by github 
+            - name:  Checkout code
+              uses: actions/checkout@v4
+            
+            - name: Setup .Net
+              uses: actions/setup-dotnet@v4
+              with:
+                dotnet-version: "10.0.x" # we use latest dotnet sdk 10 (lts)
+            
+            - name: Restore Dependencies
+              run: dotnet restore
+              
+            - name: Build Project
+              run: dotnet build --configuration Release --no-restore
+
